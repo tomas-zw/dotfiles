@@ -1,0 +1,163 @@
+# Re-run i3-config-wizard(1) for a clean config
+# https://i3wm.org/docs/userguide.html for a complete reference!
+
+set $mod Mod4
+set $ctrl Control
+set $term kitty
+set $center DP-4
+set $left DP-0
+set $right DP-2
+
+# Font
+font pango:VictorMono Nerd Font Mono SemiBold 11
+
+set $bg-color            #11121D
+set $inactive-bg-color   #11121D
+set $text-color          #FFFFFF
+set $inactive-text-color #787C99
+set $urgent-bg-color     #E53935
+set $active-border-color #ff9e64
+
+# window colors
+#                         border              background            text                  indicator
+client.focused            $inactive-bg-color  $active-border-color  $text-color           $active-border-color
+client.unfocused          $inactive-bg-color  $inactive-bg-color    $inactive-text-color  $bg-color
+client.focused_inactive   $inactive-bg-color  $inactive-bg-color    $inactive-text-color  $bg-color
+client.urgent             $urgent-bg-color    $urgent-bg-color      $text-color           $bg-color
+
+# A more modern dmenu replacement is rofi:
+bindsym $mod+o exec --no-startup-id rofi -show drun
+bindsym $mod+$ctrl+p exec ~/.config/i3/powermenu.sh
+# Lock screen
+bindsym $mod+$ctrl+l exec i3lock -t -i ~/.config/i3/locked.png
+
+# start a terminal
+bindsym $mod+Return exec $term
+
+# Screenshots with Flameshot
+bindsym Print exec flameshot gui
+bindsym Shift+Print exec flameshot full
+
+# change focus
+bindsym $mod+n focus up
+bindsym $mod+h focus down
+bindsym $mod+e focus left
+bindsym $mod+i focus right
+# move focused window
+bindsym $mod+$ctrl+n move up
+bindsym $mod+$ctrl+h move down
+bindsym $mod+$ctrl+e move left
+bindsym $mod+$ctrl+i move right
+
+# kill focused window
+bindsym $mod+$ctrl+q kill
+
+# split in horizontal orientation
+bindsym $mod+m split h
+# split in vertical orientation
+bindsym $mod+k split v
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+# toggle tiling / floating
+bindsym $mod+$ctrl+f floating toggle
+# change focus between tiling / floating windows
+bindsym $mod+u focus mode_toggle
+# Drag floating windows to their wanted position
+floating_modifier $ctrl
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+x exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# Scratchpads
+exec --no-startup-id kitty --class scratch-term
+for_window [class="scratch-term"] floating enable, resize set 1400 1000, move to scratchpad
+bindsym $mod+s [class="scratch-term"] scratchpad show; move position center
+
+# Define names for default workspaces.
+set $ws1 "1 Main"
+set $ws2 "2 Web."
+set $ws3 "3 Chat"
+set $ws4 "4 Scratch"
+set $ws5 "5 Zoom"
+set $ws6 "6 Term"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+space workspace number $ws1
+bindsym $mod+x workspace number $ws2
+bindsym $mod+d workspace number $ws3
+bindsym $mod+c workspace number $ws4
+bindsym $mod+z workspace number $ws5
+bindsym $mod+v workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+# move focused container to workspace
+bindsym $mod+$ctrl+1 move container to workspace number $ws1
+bindsym $mod+$ctrl+2 move container to workspace number $ws2
+bindsym $mod+$ctrl+3 move container to workspace number $ws3
+bindsym $mod+$ctrl+4 move container to workspace number $ws4
+bindsym $mod+$ctrl+5 move container to workspace number $ws5
+bindsym $mod+$ctrl+6 move container to workspace number $ws6
+bindsym $mod+$ctrl+7 move container to workspace number $ws7
+bindsym $mod+$ctrl+8 move container to workspace number $ws8
+bindsym $mod+$ctrl+9 move container to workspace number $ws9
+bindsym $mod+$ctrl+0 move container to workspace number $ws10
+
+# workspace default monitors
+workspace $ws1 output $center
+workspace $ws2 output $left
+workspace $ws3 output $right
+workspace $ws4 output $center
+workspace $ws5 output $left
+workspace $ws6 output $right
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+        bindsym e resize shrink width 5 px or 5 ppt
+        bindsym i resize grow width 5 px or 5 ppt
+        bindsym n resize grow height 5 px or 5 ppt
+        bindsym i resize shrink height 5 px or 5 ppt
+        # back to normal: Enter or Escape or $mod+w
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+w mode "default"
+}
+
+bindsym $mod+w mode "resize"
+
+# Startup scripts
+# Polybar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# Xrandr script for monitor orientation.
+exec --no-startup-id ~/.config/i3/display-settings.sh
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# NetworkManager is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Remove titlebars for gaps
+# smart_gaps on
+for_window [class=.*] border pixel 2
+gaps inner 6
+gaps outer 0
