@@ -1,4 +1,4 @@
-/* vim:ft=css */
+// vim:ft=css
 
 configuration {
   font: "VictorMono Nerd Font SemiBold 13";

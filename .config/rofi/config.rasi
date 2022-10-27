@@ -1,4 +1,4 @@
-/* vim:ft=css */
+// vim:ft=css
 
 configuration {
   display-drun: " ";
