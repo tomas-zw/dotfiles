@@ -1,3 +1,5 @@
+/* vim:ft=css */
+
 * {
   bg: #11121D;
   bg-alt: #444b6a;

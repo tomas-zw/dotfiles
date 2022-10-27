@@ -1,3 +1,5 @@
+/* vim:ft=css */
+
 configuration {
   display-drun: " ";
   display-window: "Windows:";
