@@ -41,6 +41,11 @@ packer.init {
 -- Install plugins here --
 return packer.startup(function(use)
 
+    -- Misc
+    use "wbthomason/packer.nvim" -- Have packer manage itself
+    use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
+    use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
+
     -- improve startup
     use 'lewis6991/impatient.nvim'
 
@@ -101,11 +106,6 @@ return packer.startup(function(use)
 
     -- Show indent-lines
     --use "lukas-reineke/indent-blankline.nvim"
-
-    -- Misc
-    use "wbthomason/packer.nvim" -- Have packer manage itself
-    use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
-    use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
