@@ -22,11 +22,15 @@ vim.g.maplocalleader = ","
 --   command_mode = "c",
 
 -- Normal --
--- My HJKL | use f,F,t,T for left and right--
+--  | n
+--  | h : w, b, e, f and t for horizontal movement
+-- l, L | jump to next search
 keymap("n", "n", "k", opts)
 keymap("n", "h", "j", opts)
 keymap("n", "l", "n", opts)
-keymap("n", "<S-l>", "<S-n>", opts)
+keymap("n", "L", "N", opts)
+keymap("n", "N", "<C-u>", opts)
+keymap("n", "H", "<C-d>", opts)
 keymap("n", "<S-u>", "<C-r>", opts)
 keymap("n", "<Esc>", ":noh<CR>", opts)
 keymap("n", "<localleader>.", ":NvimTreeToggle<cr>", opts)
@@ -60,26 +64,20 @@ keymap("x", "<A-h>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-n>", ":move '<-2<CR>gv-gv", opts)
 
 -- Window navigation --
--- 'e' for left, 'i' for right
+--    | n, e, i
+--  | h
 keymap("n", "<localleader>n", "<C-w>k", opts)
 keymap("n", "<localleader>h", "<C-w>j", opts)
 keymap("n", "<localleader>e", "<C-w>h", opts)
 keymap("n", "<localleader>i", "<C-w>l", opts)
 -- swap windows
 keymap("n", "<localleader>x", "<C-w>x", opts)
--- cycle open windows
---keymap("n", "<localleader> ", "<C-w>w", opts)
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize +2<CR>", opts)
 keymap("n", "<C-Down>", ":resize -2<CR>", opts)
 keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
-
--- Navigate buffers
--- keymap("n", "<S-n>", ":bnext<CR>", opts)
--- keymap("n", "<S-h>", ":bprevious<CR>", opts)
-
 
 -- Terminal --
 -- Better terminal navigation
@@ -89,9 +87,7 @@ keymap("t", "<C-n>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-t>", "<C-\\><C-N><C-w>l", term_opts)
 keymap("t", "<Esc>", "<C-\\><C-N>", term_opts)
 
--- Telescope keymaps --
--- keymap("n", "<leader>tf", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>", opts)
-
+-- Telescope --
 -- Pickers
 keymap("n", "<localleader><localleader>", "<cmd>Telescope find_files<cr>", opts)
 keymap("n", "<localleader><leader>", "<cmd>Telescope buffers<cr>", opts)
