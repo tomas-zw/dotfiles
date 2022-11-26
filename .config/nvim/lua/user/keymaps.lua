@@ -89,7 +89,8 @@ keymap("t", "<Esc>", "<C-\\><C-N>", term_opts)
 
 -- Telescope --
 -- Pickers
-keymap("n", "<localleader><localleader>", "<cmd>Telescope find_files<cr>", opts)
+-- keymap("n", "<localleader><localleader>", "<cmd>Telescope find_files<cr>", opts)
+keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
 keymap("n", "<localleader><leader>", "<cmd>Telescope buffers<cr>", opts)
 keymap("n", "<leader>tg", "<cmd>Telescope live_grep<cr>", opts)
 keymap("n", "<leader>ts", "<cmd>Telescope grep_string<cr>", opts)
