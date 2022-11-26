@@ -53,7 +53,7 @@ bindsym $mod+$ctrl+i move right
 bindsym $mod+$ctrl+q kill
 
 # split in horizontal orientation
-bindsym $mod+m split h
+bindsym $mod+j split h
 # split in vertical orientation
 bindsym $mod+k split v
 # enter fullscreen mode for the focused container
@@ -74,54 +74,62 @@ bindsym $mod+Shift+x exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # Scratchpads
 exec --no-startup-id kitty --class scratch-term
-for_window [class="scratch-term"] floating enable, resize set 1400 1000, move to scratchpad
+for_window [class="scratch-term"] floating enable, resize set 1440 1200, move to scratchpad
 bindsym $mod+s [class="scratch-term"] scratchpad show; move position center
+# Mail scrathpad
+exec --no-startup-id thunderbird --class scratch-mail
+for_window [class="scratch-mail"] floating enable, resize set 1440 1200, move to scratchpad
+bindsym $mod+m [class="scratch-mail"] scratchpad show; move position center
+# Emacs scrathpad
+exec --no-startup-id emacs
+for_window [class="Emacs"] floating enable, resize set 1440 1200, move to scratchpad
+bindsym $mod+a [class="Emacs"] scratchpad show; move position center
 
 # Define names for default workspaces.
 set $ws1 "1 Main"
 set $ws2 "2 Dev."
-set $ws3 "3 Agenda"
+set $ws3 "3 Routes"
 set $ws4 "4 Zoom"
-set $ws5 "5 Routes"
-set $ws6 "6 Chat"
-set $ws7 "7 Term"
-set $ws8 "8 G-LS"
-set $ws9 "9 X."
+set $ws5 "5 Chat"
+set $ws6 "6 Term"
+set $ws7 "7 G-LS"
+set $ws8 "8 X."
+set $ws9 "9"
 set $ws10 "10"
 
 # switch to workspace
 bindsym $mod+space workspace number $ws1
 bindsym $mod+d workspace number $ws2
-bindsym $mod+a workspace number $ws3
+bindsym $mod+r workspace number $ws3
 bindsym $mod+z workspace number $ws4
-bindsym $mod+r workspace number $ws5
-bindsym $mod+c workspace number $ws6
-bindsym $mod+t workspace number $ws7
-bindsym $mod+g workspace number $ws8
-bindsym $mod+x workspace number $ws9
-bindsym $mod+0 workspace number $ws10
+bindsym $mod+c workspace number $ws5
+bindsym $mod+t workspace number $ws6
+bindsym $mod+g workspace number $ws7
+bindsym $mod+x workspace number $ws8
+bindsym $mod+0 workspace number $ws9
+bindsym $mod+1 workspace number $ws10
+
 # move focused container to workspace
 bindsym $mod+$ctrl+space move container to workspace number $ws1
 bindsym $mod+$ctrl+d move container to workspace number $ws2
-bindsym $mod+$ctrl+a move container to workspace number $ws3
+bindsym $mod+$ctrl+r move container to workspace number $ws3
 bindsym $mod+$ctrl+z move container to workspace number $ws4
-bindsym $mod+$ctrl+r move container to workspace number $ws5
-bindsym $mod+$ctrl+c move container to workspace number $ws6
-bindsym $mod+$ctrl+t move container to workspace number $ws7
-bindsym $mod+$ctrl+g move container to workspace number $ws8
-bindsym $mod+$ctrl+x move container to workspace number $ws9
-bindsym $mod+$ctrl+0 move container to workspace number $ws10
+bindsym $mod+$ctrl+c move container to workspace number $ws5
+bindsym $mod+$ctrl+t move container to workspace number $ws6
+bindsym $mod+$ctrl+g move container to workspace number $ws7
+bindsym $mod+$ctrl+x move container to workspace number $ws8
+bindsym $mod+$ctrl+0 move container to workspace number $ws9
+bindsym $mod+$ctrl+1 move container to workspace number $ws10
 
 # workspace default monitors
 workspace $ws1 output $center
 workspace $ws2 output $center
 workspace $ws3 output $center
 workspace $ws4 output $center
-workspace $ws5 output $center
+workspace $ws5 output $right
 workspace $ws6 output $right
 workspace $ws7 output $right
-workspace $ws8 output $right
-workspace $ws9 output $left
+workspace $ws8 output $left
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
